@@ -47,10 +47,10 @@ class Start
       war_turn(turn) if turn.type == :war
       mad_turn(turn) if turn.type == :mutually_assured_destruction
       @turn_num += 1
-      break if player1.deck.cards.empty? || player2.deck.cards.empty? || @turn_num == 1_000_000
+      break if player1.has_lost? || player2.has_lost? || @turn_num == 1_000_000
     end
-    @final_winner = player2 if player1.deck.cards.empty?
-    @final_winner = player1 if player2.deck.cards.empty?
+    @final_winner = player2 if player1.has_lost?
+    @final_winner = player1 if player2.has_lost?
     display_final_winner(final_winner)
   end
 
