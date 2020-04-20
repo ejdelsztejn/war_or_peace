@@ -42,18 +42,11 @@ class Start
 
   def turn
     loop do
-      @player1.deck.cards.shuffle!
-      @player2.deck.cards.shuffle!
       turn = Turn.new(@player1, @player2)
-      if turn.type == :basic
-        basic_turn(turn)
-        @turn_num += 1
-      elsif turn.type == :war
-        war_turn(turn)
-        @turn_num += 1
-      elsif turn.type == :mutually_assured_destruction
-        @turn_num += 1
-      end
+      basic_turn(turn) if turn.type == :basic
+      war_turn(turn) if turn.type == :war
+      mad_turn(turn) if turn.type == :mutually_assured_destruction
+      @turn_num += 1
       break if player1.deck.cards.empty? || player2.deck.cards.empty? || @turn_num == 1_000_000
     end
     @final_winner = player2 if player1.deck.cards.empty?
@@ -62,6 +55,10 @@ class Start
   end
 
   def display_final_winner(final_winner)
-    puts "The winner is #{final_winner.name}!"
+    if final_winner != ''
+      puts "The winner is #{final_winner.name}!"
+    else
+      puts "DRAW!"
+    end
   end
 end

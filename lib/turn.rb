@@ -3,21 +3,26 @@ require './lib/deck'
 require './lib/player'
 
 class Turn
-  attr_reader :player1, :player2, :spoils_of_war
-  def initialize(player1, player2)
-    @player1       = player1
-    @player2       = player2
+  attr_reader :player1, :player2, :spoils_of_war, :type
+  def initialize(p1, p2)
+    @player1       = p1
+    @player2       = p2
     @spoils_of_war = []
+    @type          = determine_turn_type
   end
 
-  def type
-    if (player1.deck.rank_of_card_at(0) == player2.deck.rank_of_card_at(0)) && (player1.deck.rank_of_card_at(2) != player2.deck.rank_of_card_at(2))
-      :war
-    elsif (player1.deck.rank_of_card_at(0) == player2.deck.rank_of_card_at(0)) && (player1.deck.rank_of_card_at(2) == player2.deck.rank_of_card_at(2))
-      :mutually_assured_destruction
-    else
-      :basic
-    end
+  def determine_turn_type
+    return :mutually_assured_destruction if top_card_same_rank? && third_card_same_rank?
+    return :war if top_card_same_rank?
+    return :basic if !top_card_same_rank?
+  end
+
+  def top_card_same_rank?
+    player1.deck.rank_of_card_at(0) == player2.deck.rank_of_card_at(0)
+  end
+
+  def third_card_same_rank?
+    player1.deck.rank_of_card_at(2) == player2.deck.rank_of_card_at(2)
   end
 
   def winner
@@ -46,8 +51,9 @@ class Turn
       @spoils_of_war << player1.deck.cards.slice!(0..2)
       @spoils_of_war << player2.deck.cards.slice!(0..2)
     else
-      player1.deck.cards.slice!(0..2)
-      player2.deck.cards.slice!(0..2)
+      @spoils_of_war << player1.deck.cards.slice!(0..2)
+      @spoils_of_war << player2.deck.cards.slice!(0..2)
+      @spoils_of_war = []
     end
   end
 
