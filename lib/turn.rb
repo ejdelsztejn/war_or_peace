@@ -51,9 +51,8 @@ class Turn
       @spoils_of_war << player1.deck.cards.slice!(0..2)
       @spoils_of_war << player2.deck.cards.slice!(0..2)
     else
-      @spoils_of_war << player1.deck.cards.slice!(0..2)
-      @spoils_of_war << player2.deck.cards.slice!(0..2)
-      @spoils_of_war = []
+      player1.deck.cards.slice!(0..2)
+      player2.deck.cards.slice!(0..2)
     end
   end
 

@@ -64,22 +64,21 @@ card50 = Card.new(:club, 'Queen', 12)
 card51 = Card.new(:club, 'King', 13)
 card52 = Card.new(:club, 'Ace', 14)
 
+
 standard_deck = [
   card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11,
-  card12, card13, card14, card15, card16, card17, card18, card19, card20, card21,
-  card22, card23, card24, card25, card26, card27, card28, card29, card30, card31,
-  card32, card33, card34, card35, card36, card37, card38, card39, card40, card41,
-  card42, card43, card44, card45, card46, card47, card48, card49, card50, card51,
-  card52
+  card12, card13, card14, card15, card16, card17, card18, card19, card20, #card21,
+  # card22, card23, card24, card25, card26, card27, card28, card29, card30, card31,
+  # card32, card33, card34, card35, card36, card37, card38, card39, card40, card41,
+  # card42, card43, card44, card45, card46, card47, card48, card49, card50, card51,
+  # card52
 ]
 
-standard_deck.shuffle!
+deck1 = Deck.new(standard_deck.shuffle.slice(0..10))
+deck2 = Deck.new(standard_deck.shuffle)
 
-deck1 = Deck.new(standard_deck.slice!(0..25))
-deck2 = Deck.new(standard_deck)
-
-player1 = Player.new("Yiska", deck1)
-player2 = Player.new("Naftali", deck2)
+player1 = Player.new("Jessye", deck1)
+player2 = Player.new("Lynne", deck2)
 
 start = Start.new(player1, player2)
 start.play

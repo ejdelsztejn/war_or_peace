@@ -13,10 +13,10 @@ class Start
   end
 
   def play
-    puts "Welcome to War! (or Peace) This game will be played with 52 cards."
-    puts "The players today are #{player1.name} and #{player2.name}."
-    puts "Type 'GO' to start the game!"
-    puts "------------------------------------------------------------------"
+    p "Welcome to War! (or Peace) This game will be played with 52 cards."
+    p "The players today are #{player1.name} and #{player2.name}."
+    p "Type 'GO' to start the game!"
+    p "------------------------------------------------------------------"
     play = gets.chomp
     turn if play.upcase == 'GO'
   end
@@ -25,19 +25,19 @@ class Start
     winner = turn.winner
     turn.pile_cards
     turn.award_spoils(winner)
-    puts "Turn #{@turn_num}: #{winner.name} won 2 cards"
+    p "Turn #{@turn_num}: #{winner.name} won 2 cards"
   end
 
   def war_turn(turn)
     winner = turn.winner
     turn.pile_cards
     turn.award_spoils(winner)
-    puts "Turn #{@turn_num}: WAR - #{winner.name} won 6 cards"
+    p "Turn #{@turn_num}: WAR - #{winner.name} won 6 cards" unless turn.winner.nil?
   end
 
   def mad_turn(turn)
     turn.pile_cards
-    puts "Turn #{@turn_num}: *mutually assured destruction* 6 cards removed from play"
+    p "Turn #{@turn_num}: *mutually assured destruction* 6 cards removed from play"
   end
 
   def turn
@@ -46,6 +46,7 @@ class Start
       basic_turn(turn) if turn.type == :basic
       war_turn(turn) if turn.type == :war
       mad_turn(turn) if turn.type == :mutually_assured_destruction
+
       @turn_num += 1
       break if player1.has_lost? || player2.has_lost? || @turn_num == 1_000_000
     end
@@ -56,9 +57,9 @@ class Start
 
   def display_final_winner(final_winner)
     if final_winner != ''
-      puts "The winner is #{final_winner.name}!"
+      p "The winner is #{final_winner.name}!"
     else
-      puts "DRAW!"
+      p "DRAW!"
     end
   end
 end
