@@ -24,23 +24,18 @@ class Start
   def basic_turn(turn)
     winner = turn.winner
     turn.pile_cards
-    unless winner.nil?
-      turn.award_spoils(winner)
-      p "Turn #{@turn_num}: #{winner.name} won 2 cards"
-    end
+    turn.award_spoils(winner)
+    p "Turn #{@turn_num}: #{winner.name} won 2 cards"
   end
 
   def war_turn(turn)
     winner = turn.winner
     turn.pile_cards
-    unless winner.nil?
-      turn.award_spoils(winner)
-      p "Turn #{@turn_num}: WAR - #{winner.name} won 6 cards"
-    end
+    turn.award_spoils(winner)
+    p "Turn #{@turn_num}: WAR - #{winner.name} won 6 cards"
   end
 
   def mad_turn(turn)
-    winner = turn.winner
     turn.pile_cards
     p "Turn #{@turn_num}: *mutually assured destruction* 6 cards removed from play"
   end
@@ -48,9 +43,7 @@ class Start
   def turn
     loop do
       turn = Turn.new(@player1, @player2)
-      @player1.deck.cards.shuffle!
-      @player2.deck.cards.shuffle!
-
+      require "pry"; binding.pry
       basic_turn(turn) if turn.type == :basic
       war_turn(turn) if turn.type == :war
       mad_turn(turn) if turn.type == :mutually_assured_destruction

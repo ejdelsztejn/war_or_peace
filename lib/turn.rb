@@ -12,17 +12,29 @@ class Turn
   end
 
   def determine_turn_type
-    return :mutually_assured_destruction if top_card_same_rank? && third_card_same_rank?
-    return :war if top_card_same_rank?
-    return :basic if !top_card_same_rank?
+    if top_card_same_rank? && third_card_same_rank?
+      :mutually_assured_destruction
+    elsif top_card_same_rank? && !third_card_same_rank?
+      :war
+    else
+      :basic
+    end
   end
 
   def top_card_same_rank?
-    player1.deck.rank_of_card_at(0) == player2.deck.rank_of_card_at(0)
+    if player1.deck.rank_of_card_at(0) == player2.deck.rank_of_card_at(0)
+      return true
+    else
+      return false
+    end
   end
 
   def third_card_same_rank?
-    player1.deck.rank_of_card_at(2) == player2.deck.rank_of_card_at(2)
+    if player1.deck.rank_of_card_at(2) == player2.deck.rank_of_card_at(2)
+      return true
+    else
+      return false
+    end
   end
 
   def winner
@@ -32,7 +44,7 @@ class Turn
     elsif type == :war
       return player1 if player1.deck.rank_of_card_at(2) > player2.deck.rank_of_card_at(2)
       return player2 if player1.deck.rank_of_card_at(2) < player2.deck.rank_of_card_at(2)
-    else
+    elsif :mutually_assured_destruction
       return "No Winner"
     end
   end
@@ -44,18 +56,16 @@ class Turn
     elsif type == :war
       @spoils_of_war << player1.deck.cards.slice!(0..2)
       @spoils_of_war << player2.deck.cards.slice!(0..2)
-    else
-      player1.deck.cards.slice!(0..2)
-      player2.deck.cards.slice!(0..2)
+    elsif type == :mutually_assured_destruction
+      player1.deck.cards.delete_at(0..2)
+      player2.deck.cards.delete_at(0..2)
     end
   end
 
   def award_spoils(winner)
-    unless winner.nil?
-      winner.deck.cards << @spoils_of_war
-      winner.deck.cards.flatten!
-      @spoils_of_war = []
-    end
+    winner.deck.cards << @spoils_of_war
+    winner.deck.cards.flatten!
+    @spoils_of_war = []
   end
 
 end
