@@ -76,8 +76,11 @@ standard_deck = [
 
 standard_deck.shuffle!
 
-deck1 = Deck.new(standard_deck.slice!(0..25))
-deck2 = Deck.new(standard_deck)
+first_deck = standard_deck.slice!(0..25)
+second_deck = standard_deck
+
+deck1 = Deck.new(first_deck)
+deck2 = Deck.new(second_deck)
 
 player1 = Player.new("Jessye", deck1)
 player2 = Player.new("Lynne", deck2)
