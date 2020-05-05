@@ -57,8 +57,8 @@ class Turn
       @spoils_of_war << player1.deck.cards.slice!(0..2)
       @spoils_of_war << player2.deck.cards.slice!(0..2)
     elsif type == :mutually_assured_destruction
-      player1.deck.cards.delete_at(0..2)
-      player2.deck.cards.delete_at(0..2)
+      player1.deck.cards.slice!(0..2)
+      player2.deck.cards.slice!(0..2)
     end
   end
 

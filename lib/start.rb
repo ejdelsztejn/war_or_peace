@@ -43,7 +43,7 @@ class Start
   def turn
     loop do
       turn = Turn.new(@player1, @player2)
-      require "pry"; binding.pry
+  
       basic_turn(turn) if turn.type == :basic
       war_turn(turn) if turn.type == :war
       mad_turn(turn) if turn.type == :mutually_assured_destruction
