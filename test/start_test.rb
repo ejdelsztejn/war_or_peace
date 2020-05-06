@@ -1,13 +1,35 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require './lib/card'
+require './lib/deck'
+require './lib/player'
+require './lib/turn'
 require './lib/start'
 
 class StartTest < MiniTest::Test
-  def test_it_exists
-    skip
-    start = Start.new
+  def setup
+    card1 = Card.new(:heart, 'Jack', 11)
+    card2 = Card.new(:heart, '10', 10)
+    card3 = Card.new(:heart, '9', 9)
+    card4 = Card.new(:diamond, 'Jack', 11)
+    card5 = Card.new(:heart, '8', 8)
+    card6 = Card.new(:diamond, 'Queen', 12)
+    card7 = Card.new(:heart, '3', 3)
+    card8 = Card.new(:diamond, '2', 2)
 
-    assert_instance_of Start, start
+    deck1 = Deck.new([card1, card2, card3, card4])
+    deck2 = Deck.new([card5, card6, card7, card8])
+
+    player1 = Player.new("Jessye", deck1)
+    player2 = Player.new("Lynne", deck2)
+
+    @start = Start.new(player1, player2)
+  end
+
+  def test_it_exists
+    setup
+
+    assert_instance_of Start, @start
   end
 
   def test
