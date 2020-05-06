@@ -12,4 +12,8 @@ class CardGeneratorTest < MiniTest::Test
     @filename = './lib/cards.txt'
     @standard_deck = CardGenerator.new(filename).cards
   end
+
+  def test_it_exists
+    assert_instance_of CardGenerator, @standard_deck
+  end
 end
